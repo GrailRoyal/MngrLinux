@@ -1,0 +1,87 @@
+Instructions
+Case Scenario
+As the Linux Administrator for a fast-growing company, you have been tasked with creating, modifying, and removing user accounts from the Linux server
+. The company has just hired 9 new employees to fill 3 newly designed departments. The departments that have been created are Engineering, Sales and IS. 
+The server must be set up with the appropriate files, folders, users, groups and permissions to ensure a successful launch of the newly designed departments.
+Objectives
+* Create a directory at the root (/) of the file system for each department. This name should reflect the department name that will use the directory.
+cd /
+sudo mkdir IS Sales Engineering
+
+
+* Create a group for each department. This name should reflect the department name that the group will be assigned.
+sudo groupadd IS 
+sudo groupadd Sales
+sudo groupadd Engineering
+
+* Create an administrative user for each of the departments.
+
+
+
+* The user will have a Bash login shell.
+* The user will belong to the respective group for each department. This will need to be the user’s primary group.
+
+sudo useradd -m -s /bin/bash -g IS Is-admin
+sudo useradd -m -s /bin/bash -g Sales Sales-admin
+sudo useradd -m -s /bin/bash -g Engineering Engr-admin
+
+* Create two additional users for each department.
+
+
+
+* The users will have a Bash login shell.
+* The users will belong to their respective group for each department. This will need to be the user’s primary group.
+sudo useradd -m -s /bin/bash -g IS Is-user1
+sudo useradd -m -s /bin/bash -g IS Is-user2
+sudo useradd -m -s /bin/bash -g Sales Sales-user1
+sudo useradd -m -s /bin/bash -g Sales Sales-user2
+sudo useradd -m -s /bin/bash -g Engineering Engr-user1
+sudo useradd -m -s /bin/bash -g Engineering Engr-user2
+
+* For security reasons, the following modifications will need to be made to each of the departments' respective directories:
+
+
+* Ensure that the owner of each of the directories is the department administrator and the group ownership is the group for each department.
+* The department administrator will have full access to their respective department directories.
+* Ensure that only the owner of a file in the department’s directory can delete the file. The user will also have ownership of their respective department folders.
+* Normal users in each department will have full access (Read, Write and Execute) to their respective department folders.
+The department folders will ONLY be accessible by users/administrators in each of the respective departments. Ensure that no one else will have permissions to the folders.
+sudo chown IS Is-admin
+sudo chown Sales Sales-admin
+sudo chown Engineering Engr-admin
+chgrp IS IS
+chgrp Sales Sales
+chrgrp Engineering Engineering
+sudo chmod 1770 /IS
+sudo chmod 1770 /Sales
+sudo chmod 1770 /Engineering
+* Create a document in each of the department directories.
+
+
+* The ownerships on this file will be the same as the directory it is located in.
+* The document should contain only one line of text that states, “This file contains confidential information for the department.”
+* This file can be read by any user in the department, but can only be modified by the department administrator. No one else has permissions to this file.
+sudo nano /IS/Confidential
+sudo nano /Sales/Confidential
+sudo nano /Engineering/Confidential
+sudo chmod 740 /IS/Confidential
+sudo chmod 740 /Sales/Confidential
+sudo chmod 740 /Engineering/Confidential
+
+
+Deliverables
+* Use the appropriate command to verify each user and group has been created
+sudo tail -5 /etc/passwd
+sudo tail -5 /etc/group
+
+* Use the appropriate command to verify each user’s group assignment.
+sudo ls -l /
+
+* Use the appropriate command to verify the directory creation and the permission settings.
+sudo ls -ld /IS
+sudo ls -ld /Sales
+sudo ls -ld /Engineering
+* Use the appropriate command to verify the files are created in their respective directories.
+sudo ls -l /IS/Confidential
+sudo ls -l /Sales/Confidential
+sudo ls -l /Engineering/Confidential
